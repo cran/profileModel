@@ -1,0 +1,5 @@
+Changes since version 0.5-1:
+----------------------------
+*	The function scaleFit() was re-written in order to support more model classes.
+*	A change in the position of the comments in plot.profileModel.R after recommendation from B. Venables.
+*	Correction of typos (sorry!) and various improvements of the help files.
