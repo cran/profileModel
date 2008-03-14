@@ -1,3 +1,10 @@
+Changes since version 0.5-2:
+----------------------------
+*	Corrected a bug in the profZoom method that was related to the profile values that where used for the binary search. The evaluation of the profiles at candidate endpoints was not always accurate due to poor starting values within 'profiling'.  Now is stable but slightly extra computational effort is needed than in the previous version (14/03/2008)
+*	Minor improvements of the help files (14/03/2008)
+*	Corrected a bug that was affecting the output of the parameter names in the profZoom method. (27/02/2008)
+
+
 Changes since version 0.5-1:
 ----------------------------
 *	The function scaleFit() was re-written in order to support more model classes.

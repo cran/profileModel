@@ -35,14 +35,16 @@ verbose = FALSE, ...)
   \item{fitted}{a \code{\link{glm}}-like fitted object with \bold{linear
       predictor} (see Details of \code{\link{profileModel}} for the methods
     that have to be supported by \code{fitted}).}
-  \item{prof}{a \code{"profileModel"} object with non-\code{NULL} quantile.}
-  \item{quantile}{The quantile to be used for the construction of the
-  confidence intervals. The default is qchisq(0.95, 1).}
-  \item{verbose}{if \code{TRUE} (default) progress indicators are printed during
-    the progress of calculating the confidence intervals.}
-  \item{endpoint.tolerance}{the accuracy in the decimal places of the
-  endpoints of the confidence intervals when they are calculated via the
-  "profZoom" method (see Details).}
+  \item{prof}{a \code{"profileModel"} object with non-\code{NULL}
+  quantile.}  \item{quantile}{The quantile to be used for the
+  construction of the confidence intervals. The default is qchisq(0.95,
+  1).}
+  \item{verbose}{if \code{TRUE} (default) progress indicators are
+  printed during the progress of calculating the confidence intervals.}
+  \item{endpoint.tolerance}{the tolerance on the absolute difference of
+  the value of the profile at the endpoints from the quantile used. Only
+  relevant when confidence intervals are constructed via the "profZoom"
+  method (see Details).}
   \item{max.zoom}{the maximum number of iterations that the binary
   search algorithm will take towards the achievement of
   \code{endpoint.tolerance}.}
@@ -50,19 +52,19 @@ verbose = FALSE, ...)
   \item{stepsize}{same as in \code{\link{profileModel}}.}
   \item{stdn}{same as in \code{\link{profileModel}}.}
   \item{gridsize}{same as in \code{\link{profileModel}}.}
-  \item{scale}{same as in \code{\link{profileModel}}.}
-  \item{which}{for which parameters should the confidence intervals be calculated?}
+  \item{scale}{same as in \code{\link{profileModel}}.}  \item{which}{for
+  which parameters should the confidence intervals be calculated?}
   \item{objective}{same as in \code{\link{profileModel}}.}
   \item{agreement}{same as in \code{\link{profileModel}}.}
   \item{method}{the method to be used for the calculation of the
   confidence intervals. Possible values are "smooth", which is the
-  default, and "zoom" (see Details).}
-  \item{n.interpolations}{if \code{method="smooth"} the number of
-  interpolations to be used for spline smoothing. The default is 100.}
-  \item{\dots}{for \code{confintModel}, further arguments passed to the
-  specified objective. For the methods \code{profZoom},
-  \code{profSmooth} and
-  \code{profConfint}, further arguments passed to or from other functions.}
+  default, and "zoom" (see Details).}  \item{n.interpolations}{if
+  \code{method="smooth"} the number of interpolations to be used for
+  spline smoothing. The default is 100.}  \item{\dots}{for
+  \code{confintModel}, further arguments passed to the specified
+  objective. For the methods \code{profZoom}, \code{profSmooth} and
+  \code{profConfint}, further arguments passed to or from other
+  functions.}
 }
 \details{
   The confidence intervals methods refer to convex
@@ -79,10 +81,10 @@ verbose = FALSE, ...)
   \code{profSmooth} method is applied to the \code{"profileModel"} object.
 
   The \code{profZoom} method relies on a binary search and can find the
-  endpoints of the confidence intervals within a pre-specified
-  \code{tolerance} on the accuracy of the decimal places of the
-  endpoints. It is a computationally intensive method and is useful in
-  case where the estimate is infinite and in coverage related
+  endpoints of the confidence intervals for a pre-specified tolerance
+  for the absolute difference of the value of the profile at each endpoint
+  from the quantile used. It is a computationally intensive method and is
+  useful in cases where the estimate is infinite and in coverage related
   simulations.
 
   The \code{profSmooth} method, fits a smoothing spline on the points
