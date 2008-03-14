@@ -21,7 +21,7 @@ function (prof)
         sgn <- sign(profRes.i[, 1] - beta[i])
         if (!is.null(intersects)) 
             if (sum(intersects[i, ]) == 1) 
-                sgn <- c(-1, 1) * intersects[i, ]
+                sgn <- sum(c(-1, 1) * intersects[i, ])
         sgn.sqrt <- sgn * sqrt(profRes.i[, 2])
         profRes[[i]][, 2] <- sgn.sqrt
         colnames(profRes[[i]])[2] <- "Signed sqrt of the objective"

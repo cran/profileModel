@@ -1,3 +1,7 @@
+Changes since version 0.5-3:
+----------------------------
+* Corrected a bug in the signedSquareRoots method, that could cause computation of signed square roots with wrong sign when asymptotes where detected.
+
 Changes since version 0.5-2:
 ----------------------------
 *	Corrected a bug in the profZoom method that was related to the profile values that where used for the binary search. The evaluation of the profiles at candidate endpoints was not always accurate due to poor starting values within 'profiling'.  Now is stable but slightly extra computational effort is needed than in the previous version (14/03/2008)
