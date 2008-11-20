@@ -251,9 +251,11 @@ function (fitted, gridsize = 10, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
 {
     Betas <- coef(fitted)
     BetasNames <- names(Betas)
-    if (is.null(stdErrors)) 
-        stdErrors <- summary(fitted)$coefficients[, 2]
     noNA <- !is.na(Betas)
+    if (is.null(stdErrors)) {
+      stdErrors <- rep(NA, length(Betas))
+      stdErrors[noNA] <- summary(fitted)$coefficients[, 2]
+    }
     if (scale) {
         fitted <- scaleFit(fitted)
         Xmax <- fitted$X.max.scaleFit
