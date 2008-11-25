@@ -254,7 +254,7 @@ function (fitted, gridsize = 10, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
     noNA <- !is.na(Betas)
     if (is.null(stdErrors)) {
       stdErrors <- rep(NA, length(Betas))
-      stdErrors[noNA] <- summary(fitted)$coefficients[, 2]
+      stdErrors[noNA] <- summary(fitted)$coefficients[BetasNames[noNA], 2]
     }
     if (scale) {
         fitted <- scaleFit(fitted)

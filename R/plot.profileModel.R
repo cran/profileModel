@@ -19,13 +19,14 @@ function (x, colours = 2:3, title = NULL, ...)
     ######### End
     ######### Begin
     ## Modification by Ioannis Kosmidis [15/02/2008]
-    profNames <- names(x$profiles)
-    parvals <- lapply(x$profiles, FUN = function(obj) obj[, -2])
+    isnotNA <- !x$isNA
+    profNames <- names(x$profiles[isnotNA])
+    parvals <- lapply(x$profiles[isnotNA], FUN = function(obj) obj[, -2])
     parvals <- lapply(parvals, FUN = function(obj) obj[, profNames])
     rng <- apply(do.call("rbind", parvals), 2, range, na.rm = TRUE)
     Pnames <- colnames(rng)
     npar <- length(Pnames)
-    coefs <- coef(x$fit)
+    coefs <- coef(x$fit)[isnotNA]
     form <- paste(as.character(formula(x$fit))[c(2, 1, 3)], collapse = "")
     ######### End
     oldpar <- par(mar = c(0, 0, 0, 0), mfrow = c(1, 1), oma = c(3, 

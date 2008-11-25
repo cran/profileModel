@@ -276,8 +276,7 @@ profiling(fitted, grid.bounds, gridsize = 10, verbose = TRUE,
 
   \code{profileModel} has been tested and is known to work for fitted
   objects resulting from  \code{\link{lm}}, \code{\link{glm}},
-  \code{\link{polr}}, \code{gee}, \code{geeglm}, \code{brglm},
-  \code{brlr} and \code{BTm}.
+  \code{polr}, \code{gee}, \code{geeglm}, \code{brglm} and \code{BTm}.
 }
 
 \references{

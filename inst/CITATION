@@ -4,7 +4,7 @@ citEntry(entry="Manual",
     title = {"profileModel: Tools for profiling inference functions for various model classes"},
     author = personList(as.person("Ioannis Kosmidis")),
     year = {2007},
-    note = {"R package version 0.5-5"},
+    note = {"R package version 0.5-6"},
     url = {"http://go.warwick.ac.uk/kosmidis/software"},
     textVersion = paste(
       "Ioannis Kosmidis (2007).",

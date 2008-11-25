@@ -6,7 +6,7 @@ function (x, print.fit = FALSE, ...)
         stop("An object of class 'profileModel' has to be supplied.")
     fitted <- x$fit
     BetaNames <- names(x$profiles)[!x$isNA]
-    quantile <- x$quantile
+    quant <- x$quantile
     call.grid.bounds <- x$call[["grid.bounds"]]
     grid.bounds <- x$grid.bounds
     is.scaled <- !is.null(fitted$X.max.scaleFit)
@@ -20,13 +20,31 @@ function (x, print.fit = FALSE, ...)
     cat("Profiled parameters:\n")
     print.default(BetaNames, quote = FALSE, print.gap = 2)
     cat("\n")
+    if (!is.null(x$intersects)) {
+      cat("Asymptotes:\n")
+      if (all(x$intersects)) {
+        cat("profileModel has not detected any profiles with asymptotes.\n")
+        cat("\n")
+      }
+      else {
+        for (i in BetaNames) {
+          intersects.i <- x$intersects[i,]
+          if (!all(intersects.i)) {
+            where.as <- if (!intersects.i[1]) "left"
+            else if (!intersects.i[2]) "right"
+            cat(paste(i, ":", sep=""), "possible asymptote on the", where.as, "\n")
+          }
+        }
+        cat("\n")
+      }
+    }
     if (!is.null(call.grid.bounds)) {
         cat("Profiling was done over the specified ranges of values:\n")
         print(grid.bounds)
     }
     else {
-        if (!is.null(quantile)) 
-            cat("Quantile was set to:", format(quantile, digits = getOption("digits")), 
+        if (!is.null(quant)) 
+            cat("Quantile was set to:", format(quant, digits = getOption("digits")), 
                 "\n")
         else {
             cat("Profiling was done over the ranges:\n")

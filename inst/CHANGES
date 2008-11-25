@@ -1,3 +1,9 @@
+Changes since version 0.5-5:
+----------------------------
+* Minor bug corrections and minor corrections in the help files.
+* The print method for profileModel objects, now print a reports on asymptotes when appropriate.
+* Added citation file.
+
 Changes since version 0.5-4:
 ----------------------------
 * Corrected a bug, that could cause error messages in the preliminary iteration when an aliased out parameter was present in the fit (thanks to Michael Dewey).

@@ -123,22 +123,17 @@ verbose = FALSE, ...)
 library(gnm)
 data(barley)
 logitModel <- glm(y ~ site + variety, family = wedderburn, data = barley)
-profQuasi.glm <- profile(logitModel,
-                         which = paste("variety",c(2:9,"X"),sep=""))
-plot(profQuasi.glm)
-# the results seem worrying for this orthogonal example but actually,
-# it is just profile.glm that fails to detect the real shape of the profiles...
 profQuasi <- profileModel(logitModel, objective = "ordinaryDeviance",
                           quantile=qchisq(0.95, 1),
                           which = paste("variety",c(2:9,"X"),sep=""))
 # very accurate confidence intervals (with endpoints accurate up to 10
 # decimals) for the variety parameters using profConfint with
-# 'method="zoom":
+# method="zoom":
 c1 <- profConfint(profQuasi, endpoint.tolerance = 1e-10, maxit = 100,
                   method="zoom" )
 # confidence intervals using smoothing:
 c2 <- profConfint(profQuasi, method="smooth" )
-# c2 has accurate endpoints at least up to two digits
+# c2 has accurate endpoints at least up to four decimals
 # this is because of the quadratic shape of the profiles
 plot(profQuasi, cis = c1)
 plot(profQuasi, cis = c1, signed = TRUE, print.grid.points = TRUE)
