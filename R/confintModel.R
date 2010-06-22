@@ -1,7 +1,7 @@
 `confintModel` <-
 function (fitted, quantile = qchisq(0.95, 1), verbose = TRUE, 
     endpoint.tolerance = 0.001, max.zoom = 100, zero.bound = 1e-08, 
-    stepsize = 0.5, stdn = 5, gridsize = 10, scale = FALSE, which = 1:length(coef(fitted)), 
+    stepsize = 0.5, stdn = 5, gridsize = 20, scale = FALSE, which = 1:length(coef(fitted)), 
     objective = stop("'objective' is missing."), agreement = TRUE, 
     method = "smooth", n.interpolations = 100, ...) 
 {

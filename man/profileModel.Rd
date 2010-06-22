@@ -14,7 +14,7 @@
   with the profiled objectives, and others.
 }
 \usage{
-profileModel(fitted, gridsize = 10, stdn = 5, stepsize = 0.5,
+profileModel(fitted, gridsize = 20, stdn = 5, stepsize = 0.5,
              grid.bounds = NULL, quantile = NULL,
              objective = stop("'objective' is missing."), 
              agreement = TRUE, verbose = TRUE, trace.prelim = FALSE,
@@ -29,7 +29,7 @@ prelim.profiling(fitted, quantile = qchisq(0.95, 1),
                  trace.prelim = FALSE,
                  stdErrors = NULL, ...)
 
-profiling(fitted, grid.bounds, gridsize = 10, verbose = TRUE,
+profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
           objective = stop("'objective' is missing."), 
           agreement = TRUE, which = 1:length(coef(fitted)),
           profTraces = TRUE, zero.bound = 1e-08, ...)

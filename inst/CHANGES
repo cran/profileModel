@@ -1,3 +1,7 @@
+Changes since version 0.5-6:
+----------------------------
+* changed the default number of grid points to 20.
+
 Changes since version 0.5-5:
 ----------------------------
 * Minor bug corrections and minor corrections in the help files.

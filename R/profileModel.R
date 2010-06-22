@@ -243,7 +243,7 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
 }
 
 `profileModel` <-
-function (fitted, gridsize = 10, stdn = 5, stepsize = 0.5, grid.bounds = NULL, 
+function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL, 
     quantile = NULL, objective = stop("'objective' is missing."), 
     agreement = TRUE, verbose = TRUE, trace.prelim = FALSE, which = 1:length(coef(fitted)), 
     profTraces = TRUE, zero.bound = 1e-08, scale = FALSE, stdErrors = NULL, 
@@ -367,7 +367,7 @@ function (fitted, gridsize = 10, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
 
 
 `profiling` <-
-function (fitted, grid.bounds, gridsize = 10, verbose = TRUE, 
+function (fitted, grid.bounds, gridsize = 20, verbose = TRUE, 
     objective = stop("'objective' is missing."), agreement = TRUE, 
     which = 1:length(coef(fitted)), profTraces = TRUE, zero.bound = 1e-08, 
     ...)
