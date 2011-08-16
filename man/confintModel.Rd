@@ -113,7 +113,7 @@ verbose = FALSE, ...)
 }
 \references{
 }
-\author{Ioannis Kosmidis <I.Kosmidis@warwick.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
 \seealso{\code{\link{confint}}, \code{\link{profileModel}}.}
 \examples{
 \dontrun{

@@ -40,5 +40,5 @@ m2 <- scaleFit(m1)
 sum(abs(m1$fitted-m2$fitted))
 ## End Example
 }
-\author{Ioannis Kosmidis <I.Kosmidis@warwick.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
 \keyword{models}

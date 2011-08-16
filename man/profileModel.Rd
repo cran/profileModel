@@ -287,7 +287,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   S}. Chapman \& Hall/CRC.
 
 }
-\author{Ioannis Kosmidis <I.Kosmidis@warwick.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
 \seealso{\code{\link{confintModel}}, \code{\link{plot.profileModel}}, \code{\link{scaleFit}}.}
 \examples{
 ## Begin Example 1

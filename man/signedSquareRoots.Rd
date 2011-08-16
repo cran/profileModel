@@ -24,5 +24,5 @@
 \seealso{
   \code{\link{plot.profileModel}}.
 }
-\author{Ioannis Kosmidis <I.Kosmidis@warwick.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
 \keyword{manip}
