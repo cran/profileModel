@@ -4,7 +4,7 @@ export(confintModel, ordinaryDeviance,
        profConfint, profZoom, profSmooth,
        profConfint.profileModel, profZoom.profileModel, 
        profSmooth.profileModel,
-       profiling, prelim.profiling, scaleFit,
+       profiling, prelim.profiling, 
        signedSquareRoots.profileModel)
 
 S3method(profConfint,profileModel)

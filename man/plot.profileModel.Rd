@@ -8,11 +8,11 @@
   pairwise profile traces.
 }
 \usage{
-plot.profileModel(x, cis = NULL, signed = FALSE, interpolate = TRUE,
+\method{plot}{profileModel}(x, cis = NULL, signed = FALSE, interpolate = TRUE,
                   n.interpolations = 100, print.grid.points = FALSE,
                   title = NULL, ...)
 
-pairs.profileModel(x, colours = 2:3, title=NULL, ...)
+\method{pairs}{profileModel}(x, colours = 2:3, title=NULL, ...)
 }
 \arguments{
   \item{x}{a \code{"profileModel"} object.}
@@ -69,7 +69,7 @@ Chambers, J. M. and Hastie, T. J. (1992) \emph{Statistical Models in
 S}. Chapman \& Hall/CRC.
 
 }
-\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
 \seealso{\code{\link{profileModel}}, \code{\link{confintModel}}, \code{\link{profile.glm}}}
 \examples{
 # see example in 'confintModel'.

@@ -29,13 +29,13 @@ RaoScoreStatistic(fm, X, dispersion = 1)
 
   The construction of a custom objective should follow the above simple
   guidelines (see also Example 3 in \code{\link{profileModel}} and the
-  sources of either \code{ordinaryDeviance} or \code{RaoScoreStatistic}). 
+  sources of either \code{ordinaryDeviance} or \code{RaoScoreStatistic}).
 
   \code{ordinaryDeviance} refers to \code{\link{glm}}-like objects. It takes as
   input the restricted fit \code{fm} and optionally the value of the
   dispersion parameter and returns the deviance corresponding to the
   restricted fit divided by \code{dispersion}.
-  
+
   \code{RaoScoreStatistic} refers to \code{\link{glm}}-like objects. It returns
   the value of the Rao score statistic
   \eqn{s(\beta)^Ti^{-1}(\beta)s(\beta)/\phi}, where \eqn{s} is the vector of
@@ -57,7 +57,7 @@ RaoScoreStatistic(fm, X, dispersion = 1)
   Lindsay, B. G. and Qu, A. (2003). Inference functions and quadratic
   score tests. \emph{Statistical Science} \bold{18}, 394--410.
 }
-\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
 \note{
   Because the objective functions are evaluated many times in
   \code{\link{profiling}}, \code{\link{prelim.profiling}} and

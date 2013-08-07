@@ -1,11 +1,11 @@
 `prelim.profiling` <-
-function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is missing."), 
-    verbose = TRUE, which = 1:length(coef(fitted)), stepsize = 0.5, 
-    stdn = 5, agreement = TRUE, trace.prelim = FALSE, stdErrors = NULL, 
+function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is missing."),
+    verbose = TRUE, which = 1:length(coef(fitted)), stepsize = 0.5,
+    stdn = 5, agreement = TRUE, trace.prelim = FALSE, stdErrors = NULL,
     ...)
     ## which should be a vector of integers
 {
-    if (is.null(stdErrors)) 
+    if (is.null(stdErrors))
         stdErrors <- summary(fitted)$coefficients[, 2]
     Betas <- coef(fitted)
     BetasNames <- names(Betas)
@@ -23,12 +23,12 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
     if (is.null(fitted$X.max.scaleFit) & inherits(fitted,"polr"))
         X <- X[, -1, drop = FALSE]
     O <- model.offset(mf)
-    if (is.null(O)) 
+    if (is.null(O))
         O <- rep(0, nrow(X))
 #    fitted.formula <- formula(fitted)
     fm.call$offset <- NULL
     LP.or <- fitted$linear.predictor
-    if (length(Betas) == 1) 
+    if (length(Betas) == 1)
         fm.call$formula <- Y ~ -1 + offset(o)
     else {
       if (inherits(fitted,"BTm")) {
@@ -50,7 +50,7 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
     }
     ObjValue.or <- objective(fitted, ...)
     p <- length(which)
-    grid.bounds <- intersects <- matrix(NA, p, 2, dimnames = list(BetasNames[which], 
+    grid.bounds <- intersects <- matrix(NA, p, 2, dimnames = list(BetasNames[which],
         c("Left", "Right")))
     ## The information in prelim.profile could be used... TBD
     ##  if (return.profiles) {
@@ -59,17 +59,17 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
     ##  }
     should.intersect <- intersects.temp <- rep(NA, 2)
     numberofsteps <- stdn/stepsize
-    if (verbose & !trace.prelim) 
+    if (verbose & !trace.prelim)
         cat("Preliminary iteration ")
     for (i in which) {
-        if (verbose & !trace.prelim) 
+        if (verbose & !trace.prelim)
             cat(".")
         if (!noNA[i])  # aliased out
             next
         tb.included <- noNA
         tb.included[i] <- FALSE # without the aliased
         profiledName <- BetasNames[i]
-        if (trace.prelim) 
+        if (trace.prelim)
             cat(profiledName, "\n")
         stepsize.temp <- c(stepsize, stepsize)
         stdErrors.i <- stdErrors[i]
@@ -105,41 +105,41 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
                 ##  else {points(x=b,y=tempDiff);Sys.sleep(1)} #TR
                 ## }
                 curPoint <- curPoint + 1
-                b <- b - min(30, stdErrors.i)/slope.pp * curPoint * 
+                b <- b - min(30, stdErrors.i)/slope.pp * curPoint *
                   stepsize.temp[1]
                 o <- O + Xonlyi * b
                 suppressWarnings(fm <- eval(fm.call))
                 LP <- fm$linear.predictor
                 tempDiff <- objective(fm, ...) - ObjValue.or
-                if (is.na(tempDiff)) 
+                if (is.na(tempDiff))
                   stop("Profiling failed. NA's introduced by the objective.")
                 if (is.infinite(tempDiff)) {
                   warning("Infinite values were introduced by the objective.")
                   slope.pp <- 1
                 }
                 else {
-                  slope.pp <- abs(ss <- (tempDiff.old - tempDiff)/(b.old - 
+                  slope.pp <- abs(ss <- (tempDiff.old - tempDiff)/(b.old -
                     b))
                   slopes.pp[curPoint] <- slope.pp
                   ## set to give the objective a chance to increase and at the
                    # same time  to avoid huge steps while being conservative
-                  if (slope.pp < 1) 
+                  if (slope.pp < 1)
                     slope.pp <- 1
-                  if (slope.pp > 500) 
+                  if (slope.pp > 500)
                     slope.pp <- 500
                 }
                 ## if you have done the first three iterations and nothing
                  # is found stop
-                if (curPoint < 4) 
+                if (curPoint < 4)
                   nonzero.slopes <- TRUE
-                else nonzero.slopes <- !all(slopes.pp[(curPoint - 
+                else nonzero.slopes <- !all(slopes.pp[(curPoint -
                   3):curPoint] < 1e-08)
-                test <- (tempDiff < quantile | ss > 1e-08) & 
+                test <- (tempDiff < quantile | ss > 1e-08) &
                   nonzero.slopes
-                if (trace.prelim) 
-                  cat("<-- iteration:", curPoint, "\t", paste(c("CPV:", 
-                    "SL:", "OV:"), format(round(c(b, ss, tempDiff), 
-                    digits = 3), zero.print = TRUE)), "SS:", 
+                if (trace.prelim)
+                  cat("<-- iteration:", curPoint, "\t", paste(c("CPV:",
+                    "SL:", "OV:"), format(round(c(b, ss, tempDiff),
+                    digits = 3), zero.print = TRUE)), "SS:",
                     stepsize.temp[1], "\n")
             }
             grid.bounds[profiledName, 1] <- b
@@ -149,7 +149,7 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
              # ss>0 stands for the case where the search on the left side starts outside
              # the right end of the profiled objective (if agreement is false then this is
              # necessary. if agreement is true then ss>0 does not violate the facts)
-            test.intersections <- (should.intersect[1] | ss > 
+            test.intersections <- (should.intersect[1] | ss >
                 1e-08) & (!intersects.temp[1] | ss > 1e-08)
         }
         ################
@@ -182,41 +182,41 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
                 ##  else {points(x=b,y=tempDiff);Sys.sleep(1)} #TR
                 ## }
                 curPoint <- curPoint + 1
-                b <- b + min(30, stdErrors.i)/slope.pp * curPoint * 
+                b <- b + min(30, stdErrors.i)/slope.pp * curPoint *
                   stepsize.temp[2]
                 o <- O + Xonlyi * b
                 suppressWarnings(fm <- eval(fm.call))
                 LP <- fm$linear.predictor
                 tempDiff <- objective(fm, ...) - ObjValue.or
-                if (is.na(tempDiff)) 
+                if (is.na(tempDiff))
                   stop("Profiling failed. NA's introduced by the objective.")
                 if (is.infinite(tempDiff)) {
                   warning("Infinite values were introduced by the objective.")
                   slope.pp <- 1
                 }
                 else {
-                  slope.pp <- abs(ss <- (tempDiff.old - tempDiff)/(b.old - 
+                  slope.pp <- abs(ss <- (tempDiff.old - tempDiff)/(b.old -
                     b))
                   slopes.pp[curPoint] <- slope.pp
                   ## set to give the objective a chance to increase and at the
                    # same time  to avoid huge steps while being conservative
-                  if (slope.pp < 1) 
+                  if (slope.pp < 1)
                     slope.pp <- 1
-                  if (slope.pp > 500) 
+                  if (slope.pp > 500)
                     slope.pp <- 500
                 }
                 ## if you have done the first three iterations and nothing
                 # is found stop
-                if (curPoint < 4) 
+                if (curPoint < 4)
                   nonzero.slopes <- TRUE
-                else nonzero.slopes <- !all(slopes.pp[(curPoint - 
+                else nonzero.slopes <- !all(slopes.pp[(curPoint -
                   3):curPoint] < 1e-08)
-                test <- (tempDiff < quantile | ss < -1e-08) & 
+                test <- (tempDiff < quantile | ss < -1e-08) &
                   nonzero.slopes
-                if (trace.prelim) 
-                  cat("--> iteration:", curPoint, "\t", paste(c("CPV:", 
-                    "SL:", "OV:"), format(round(c(b, ss, tempDiff), 
-                    digits = 3), zero.print = TRUE)), "SS:", 
+                if (trace.prelim)
+                  cat("--> iteration:", curPoint, "\t", paste(c("CPV:",
+                    "SL:", "OV:"), format(round(c(b, ss, tempDiff),
+                    digits = 3), zero.print = TRUE)), "SS:",
                     stepsize.temp[1], "\n")
             }
             grid.bounds[profiledName, 2] <- b
@@ -226,13 +226,13 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
              # ss>0 stands for the case where the search on the left side starts outside
              # the right end of the profiled objective (if agreement is false then this is
              # necessary. if agreement is true then ss>0 does not violate the facts)
-            test.intersections <- (should.intersect[2] | ss < 
+            test.intersections <- (should.intersect[2] | ss <
                 -1e-08) & (!intersects.temp[2] | ss < -1e-08)
             stepsize.temp[2] <- stepsize.temp[2] + stepsize
             cc <- cc + 1
         }
         intersects[profiledName, ] <- intersects.temp
-        if (i == which[p] & verbose & !trace.prelim) 
+        if (i == which[p] & verbose & !trace.prelim)
             cat(" Done\n\n")
     }
     if (trace.prelim) {
@@ -243,10 +243,10 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
 }
 
 `profileModel` <-
-function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL, 
-    quantile = NULL, objective = stop("'objective' is missing."), 
-    agreement = TRUE, verbose = TRUE, trace.prelim = FALSE, which = 1:length(coef(fitted)), 
-    profTraces = TRUE, zero.bound = 1e-08, scale = FALSE, stdErrors = NULL, 
+function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
+    quantile = NULL, objective = stop("'objective' is missing."),
+    agreement = TRUE, verbose = TRUE, trace.prelim = FALSE, which = 1:length(coef(fitted)),
+    profTraces = TRUE, zero.bound = 1e-08, scale = FALSE, stdErrors = NULL,
     ...)
 {
     Betas <- coef(fitted)
@@ -266,7 +266,7 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
     if (is.character(which)) {
         which <- match(which, BetasNames)
         ttt <- is.na(which)
-        if (any(ttt)) 
+        if (any(ttt))
             stop("A least a parameter name specified in 'which' does not exist in the fitted model.")
     }
     if (any(duplicated(which))) {
@@ -284,35 +284,35 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
     if (any(na.in.which)) {
         warning("At least a parameter with value 'NA' exists in the original fit.  Profiling did not take place for these parameters.")
     }
-    if (!is.null(grid.bounds)) 
-        if (length(grid.bounds) != 2 * p) 
+    if (!is.null(grid.bounds))
+        if (length(grid.bounds) != 2 * p)
             stop("The dimension of 'grid.bounds' is not compatible with the length of 'which'.")
     objective <- match.fun(objective)
     if (is.null(grid.bounds)) {
         if (is.null(quantile)) {
-            grid.bounds <- cbind(Betas[which] - stdn * stdErrors[which], 
+            grid.bounds <- cbind(Betas[which] - stdn * stdErrors[which],
                 Betas[which] + stdn * stdErrors[which])
-            if (scale) 
+            if (scale)
                 grid.bounds <- grid.bounds * Xmax[which]
-            result <- profiling(fitted, grid.bounds = grid.bounds, 
-                gridsize = gridsize, verbose = verbose, objective = objective, 
-                which = which, agreement = agreement, profTraces = profTraces, 
+            result <- profiling(fitted, grid.bounds = grid.bounds,
+                gridsize = gridsize, verbose = verbose, objective = objective,
+                which = which, agreement = agreement, profTraces = profTraces,
                 zero.bound = zero.bound, ...)
             intersects <- NULL
             attr(grid.bounds, "from.prelim") <- FALSE
         }
         else {
-           if (scale) 
+           if (scale)
                 stdErrors <- stdErrors * Xmax
-            prelim.res <- prelim.profiling(fitted, quantile = quantile, 
-                objective = objective, verbose = verbose, which = which, 
-                stepsize = stepsize, stdn = stdn, agreement = agreement, 
-                trace.prelim = trace.prelim, stdErrors = stdErrors, 
+            prelim.res <- prelim.profiling(fitted, quantile = quantile,
+                objective = objective, verbose = verbose, which = which,
+                stepsize = stepsize, stdn = stdn, agreement = agreement,
+                trace.prelim = trace.prelim, stdErrors = stdErrors,
                 ...)
             grid.bounds <- prelim.res$grid.bounds
-            result <- profiling(fitted, grid.bounds = grid.bounds, 
-                gridsize = gridsize, verbose = verbose, objective = objective, 
-                which = which, agreement = agreement, profTraces = profTraces, 
+            result <- profiling(fitted, grid.bounds = grid.bounds,
+                gridsize = gridsize, verbose = verbose, objective = objective,
+                which = which, agreement = agreement, profTraces = profTraces,
                 zero.bound = zero.bound, ...)
             intersects <- prelim.res$intersects
             rownames(intersects) <- BetasNames[which]
@@ -320,13 +320,13 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
         }
     }
     else {
-        if (is.null(dim(grid.bounds))) 
+        if (is.null(dim(grid.bounds)))
             grid.bounds <- matrix(grid.bounds, ncol = 2, byrow = TRUE)
-        if (scale) 
+        if (scale)
             grid.bounds <- grid.bounds * Xmax[which]
-        result <- profiling(fitted, grid.bounds = grid.bounds, 
-            gridsize = gridsize, verbose = verbose, objective = objective, 
-            which = which, agreement = agreement, profTraces = profTraces, 
+        result <- profiling(fitted, grid.bounds = grid.bounds,
+            gridsize = gridsize, verbose = verbose, objective = objective,
+            which = which, agreement = agreement, profTraces = profTraces,
             zero.bound = zero.bound, ...)
         intersects <- NULL
         attr(grid.bounds, "from.prelim") <- FALSE
@@ -335,19 +335,19 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
     if (scale) {
         grid.bounds <- grid.bounds/Xmax[which]
         for (i in 1:p) {
-            if (!noNA[which[i]]) 
+            if (!noNA[which[i]])
                 next
             result[[i]][, 1] <- result[[i]][, 1]/Xmax[which[i]]
             colnames(result[[i]])[1] <- BetasNames[which[i]]
         }
         if (profTraces) {
             for (i in 1:p) {
-                if (!noNA[which[i]]) 
+                if (!noNA[which[i]])
                   next
                 tb.included <- noNA
                 tb.included[which[i]] <- FALSE
-                result[[i]][, -c(1, 2)] <- sweep(result[[i]][, 
-                  -c(1, 2)], 2, Xmax[tb.included], "/")
+                result[[i]][, -c(1, 2)] <- sweep(result[[i]][,
+                  -c(1, 2), drop = FALSE], 2, Xmax[tb.included], "/")
                 colnames(result[[i]])[-c(1, 2)] <- BetasNames[tb.included]
             }
         }
@@ -355,10 +355,10 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
     dotss <- match.call(expand.dots = FALSE)[["..."]]
     dotssNames <- names(dotss)
     for (i in dotssNames) formals(objective)[[i]] <- eval(dotss[[i]])
-    result <- list(profiles = result, fit = fitted, quantile = quantile, 
-        gridsize = gridsize, intersects = intersects, profiled.parameters = which, 
-        profiled.objective = objective, isNA = !noNA[which], 
-        agreement = agreement, zero.bound = zero.bound, call = match.call(), 
+    result <- list(profiles = result, fit = fitted, quantile = quantile,
+        gridsize = gridsize, intersects = intersects, profiled.parameters = which,
+        profiled.objective = objective, isNA = !noNA[which],
+        agreement = agreement, zero.bound = zero.bound, call = match.call(),
         grid.bounds = grid.bounds)
     attr(result, "includes.traces") <- profTraces
     class(result) <- "profileModel"
@@ -367,15 +367,15 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
 
 
 `profiling` <-
-function (fitted, grid.bounds, gridsize = 20, verbose = TRUE, 
-    objective = stop("'objective' is missing."), agreement = TRUE, 
-    which = 1:length(coef(fitted)), profTraces = TRUE, zero.bound = 1e-08, 
+function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
+    objective = stop("'objective' is missing."), agreement = TRUE,
+    which = 1:length(coef(fitted)), profTraces = TRUE, zero.bound = 1e-08,
     ...)
     ## which should be a vector of integers
     ## grid.bounds should be a 2*length(which) vector of reals or
      # a 2 by length(which) matrix of reals
 {
-    if (is.null(dim(grid.bounds))) 
+    if (is.null(dim(grid.bounds)))
         grid.bounds <- matrix(grid.bounds, ncol = 2, byrow = TRUE)
     Betas <- coef(fitted)
     p.or <- length(Betas)
@@ -396,10 +396,10 @@ function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
     if (is.null(fitted$X.max.scaleFit) & inherits(fitted, "polr"))
         X <- X[, -1, drop = FALSE]
     O <- model.offset(mf)
-    if (is.null(O)) 
+    if (is.null(O))
         O <- rep(0, nrow(X))
 #    fitted.formula <- formula(fitted)
-    if (p.or == 1) 
+    if (p.or == 1)
         fm.call$formula <- Y ~ -1 + offset(o)
     else {
       if (inherits(fitted,"BTm"))
@@ -425,7 +425,7 @@ function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
         iprof <- which[i]
         if (!noNA[iprof]) # aliased out
             next
-        tb.included <- noNA 
+        tb.included <- noNA
         tb.included[iprof] <- FALSE # without the aliased
         profiledName <- BetasNames[iprof]
         gridd <- seq(grid.bounds[i, 1], grid.bounds[i, 2], length = gridsize)
@@ -435,22 +435,22 @@ function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
         inds.right <- which(gridd >= Betas[iprof])
         inds.left <- which(gridd < Betas[iprof])
         # Make sure you start as close as possible to the estimate
-        if (grid.bounds[i, 1] <= grid.bounds[i, 2]) 
+        if (grid.bounds[i, 1] <= grid.bounds[i, 2])
             inds.left <- inds.left[order(inds.left, decreasing = TRUE)]
         else inds.right <- inds.right[order(inds.right, decreasing = TRUE)]
         inds <- list(inds.left, inds.right)
         ObjValues <- cbind(gridd, 0)
         if (profTraces) {
             tracesNames <- BetasNames[tb.included]
-            profile.traces <- matrix(0, nrow = gridsize, ncol = sum(noNA) - 
+            profile.traces <- matrix(0, nrow = gridsize, ncol = sum(noNA) -
                 1)
             colnames(profile.traces) <- tracesNames
         }
         colnames(ObjValues) <- c(profiledName, "Differences")
-        if (verbose) 
+        if (verbose)
             cat("Profiling for parameter", profiledName, "...")
         for (k in 1:2) {
-            if (test1) 
+            if (test1)
                 LP <- LP.or
             ## else supply no starting valiues...
             ## maybe an argument to control starting values??? TBD
@@ -459,29 +459,29 @@ function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
                 o <- O + Xonlyi * bp
                 suppressWarnings(fm <- eval(fm.call))
                 ## LP will be NULL if fm$linear.predictor does not exist...OK
-                LP <- fm$linear.predictor 
+                LP <- fm$linear.predictor
                 ObjValue.current <- (objective(fm, ...) - ObjValue.or)
-                if (is.na(ObjValue.current)) 
+                if (is.na(ObjValue.current))
                   stop("Profiling failed. NA's introduced by the objective.")
-                if (is.infinite(ObjValue.current)) 
+                if (is.infinite(ObjValue.current))
                   warning("Infinite values were introduced by the objective.")
                 if (agreement) {
                   if (ObjValue.current < -(zero.bound * 1000)) {
                     stop("Profiling has found a better solution. Original fit had not converged.")
                   }
-                  ObjValues[curPoint, 2] <- (ObjValue.current >= 
+                  ObjValues[curPoint, 2] <- (ObjValue.current >=
                     zero.bound) * ObjValue.current
                 }
                 else {
                   ObjValues[curPoint, 2] <- ObjValue.current
                 }
-                if (profTraces) 
+                if (profTraces)
                   profile.traces[curPoint, ] <- coef(fm)
             }
         }
-        if (verbose) 
+        if (verbose)
             cat(" Done\n")
-        res[[profiledName]] <- if (profTraces) 
+        res[[profiledName]] <- if (profTraces)
             cbind(ObjValues, profile.traces)
         else ObjValues
     }

@@ -15,8 +15,8 @@
 confintModel(fitted, quantile = qchisq(0.95, 1), verbose = TRUE,
              endpoint.tolerance = 1e-3, max.zoom = 100,
              zero.bound = 1e-08, stepsize = 0.5, stdn = 5,
-             gridsize = 20, scale = FALSE, which = 1:length(coef(fitted)), 
-             objective = stop("'objective' is missing."), 
+             gridsize = 20, scale = FALSE, which = 1:length(coef(fitted)),
+             objective = stop("'objective' is missing."),
              agreement = TRUE, method = "smooth",
              n.interpolations = 100, ...)
 
@@ -70,7 +70,7 @@ verbose = FALSE, ...)
   The confidence intervals methods refer to convex
   objectives. Objectives that result in disjoint confidence regions are
   not currently supported.
-  
+
   When the profile object is available and was called with the
   specification of the appropriate quantile then
   \code{profConfint} should be used. \code{confintModel}
@@ -99,7 +99,7 @@ verbose = FALSE, ...)
 
   \code{profConfint} is a wrapper method that collects the capabilities
   of \code{profZoom} and \code{profSmooth}.
-  
+
   \code{profSmooth}, \code{profZoom} and \code{profConfint} use the
   quantile that comes with the \code{"profileModel"} object \code{prof}.
 }
@@ -111,9 +111,7 @@ verbose = FALSE, ...)
   an attribute carrying the name of the fitted object and the name of the
   \code{"profileModel"} object, respectively.
 }
-\references{
-}
-\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
 \seealso{\code{\link{confint}}, \code{\link{profileModel}}.}
 \examples{
 \dontrun{
@@ -148,7 +146,7 @@ pairs(profQuasi)
 profRao <- update(profQuasi, objective = "RaoScoreStatistic",
                   X = model.matrix(logitModel))
 ## End Example
-} 
+}
 }
 \keyword{htest}
 \keyword{models}

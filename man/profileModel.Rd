@@ -16,21 +16,21 @@
 \usage{
 profileModel(fitted, gridsize = 20, stdn = 5, stepsize = 0.5,
              grid.bounds = NULL, quantile = NULL,
-             objective = stop("'objective' is missing."), 
+             objective = stop("'objective' is missing."),
              agreement = TRUE, verbose = TRUE, trace.prelim = FALSE,
              which = 1:length(coef(fitted)), profTraces = TRUE,
              zero.bound = 1e-08, scale = FALSE,
              stdErrors = NULL, ...)
 
 prelim.profiling(fitted, quantile = qchisq(0.95, 1),
-                 objective = stop("'objective' is missing."),  
+                 objective = stop("'objective' is missing."),
                  verbose = TRUE, which = 1:length(coef(fitted)),
                  stepsize = 0.5, stdn = 5, agreement = TRUE,
                  trace.prelim = FALSE,
                  stdErrors = NULL, ...)
 
 profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
-          objective = stop("'objective' is missing."), 
+          objective = stop("'objective' is missing."),
           agreement = TRUE, which = 1:length(coef(fitted)),
           profTraces = TRUE, zero.bound = 1e-08, ...)
 }
@@ -57,7 +57,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
     value, when both \code{quantile} and \code{grid.bounds} are \code{NULL}. In
     \code{prelim.profiling}, \code{stdn/stepsize} is the maximum number of
     steps that are taken to the left and to the right of the estimate. The
-    default value of \code{stdn} is 5 (see Details).} 
+    default value of \code{stdn} is 5 (see Details).}
   \item{quantile}{a quantile, indicating the range that the profile must
     cover. The default value in \code{profileModel} is \code{NULL} and in
     \code{prelim.profiling}, \code{qchisq(0.95,1)} (see Details).}
@@ -81,8 +81,8 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
     \code{fitted} takes value zero if it is smaller than
     \code{zero.bound}. \code{zero.bound} is only used when
     \code{agreement=TRUE} and the default value is \code{1e-08}.}
-  \item{scale}{if \code{TRUE} \code{fitted} is scaled (see Details). The
-    default is \code{FALSE}. Only available in \code{profileModel}.}
+  \item{scale}{logical. The
+    default is \code{FALSE}. Currently has no effect. Only available in \code{profileModel}.}
   \item{stdErrors}{The vector estimated asymptotic standard errors reported
     from the fitting procedure. The default is \code{NULL} (see Details).}
   \item{\dots}{further arguments passed to the specified objective.}
@@ -105,21 +105,21 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   Exception to this are objects returned by \code{BTm} of the
   \pkg{BradleyTerry} package, where some special handling of the required
   objects takes place.
-  
+
   Note that any or both of \code{data} and \code{contrasts} could be
   \code{NULL}. This depends whether the \code{data} argument has been
   supplied to the procedure and whether \code{fitted$contrast} exists.
  % Also, it should return a vector of
  % coefficients, each corresponding to a column of
  % \code{model.matrix(fitted)}.
-  
+
   The fitting procedure that resulted \code{fitted} has to support
   \code{\link{offset}} in \code{\link{formula}}.
 %  and the object returned
 %  by \code{model.frame(fitted)} has to support the methods
 %  \code{\link{model.offset}} and \code{\link{model.response}}.
-  Also, \code{fitted$call} has to be the call that generated \code{fitted}. 
-  
+  Also, \code{fitted$call} has to be the call that generated \code{fitted}.
+
   If the fitting procedure that resulted \code{fitted}  supports an
   \code{etastart} argument (see \code{\link{glm}}) and
   \code{fitted$linear.predictor} contains the estimated linear
@@ -128,7 +128,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   accelerated and is more stable, numerically. However, it is not necessary
   that \code{etastart} is supported. In the latter case no starting
   values are supplied to the fitting procedure during profiling.
-    
+
   Support for a \code{\link{summary}} method is
   optional. \code{\link{summary}} is only used for obtaining the
   estimated asymptotic standard errors associated to the coefficients in
@@ -149,7 +149,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   is calculated, where \eqn{P} is the objective specified by the user
   and \eqn{G} is the original fit (\code{fitted}). For convex
   objectives that are minimized at the estimates of \eqn{G} (see
-  \code{agreement}), \eqn{D(G)=0}. 
+  \code{agreement}), \eqn{D(G)=0}.
 
   \code{prelim.profiling} refers only to convex objectives and searches for
   and returns the grid bounds (\code{grid.bounds}) for each
@@ -178,7 +178,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   \eqn{|L|<1}{abs(L)<1} then \eqn{|L|}{abs(L)} is set to 1 and if
   \eqn{|L|>500}{abs(L)>500} then \eqn{|L|}{abs(L)}  is set to 500. In
   this way the iteration is conservative by avoiding very small steps
-  but not over-conservative by avoiding very large steps. 
+  but not over-conservative by avoiding very large steps.
 
   If the maximum number of steps \code{stdn/stepsize} (call this \eqn{M})
   was taken and the quantile was not covered by the profile but the three
@@ -197,7 +197,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   Very small values of \code{stepsize} make \code{prelim.profiling} take
   very small steps with the effect of slowing down the execution
   time. Large values of \code{stepsize} are only recommended when the
-  estimated asymptotic standard errors are very small in \code{fitted}. 
+  estimated asymptotic standard errors are very small in \code{fitted}.
 
   \code{profileModel} is a wrapper function that collects and combines
   the capabilities of \code{profiling} and \code{prelim.profiling} by
@@ -214,16 +214,6 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   passed to \code{profiling}. If both \code{quantile} and
   \code{grid.bounds} then \code{grid.bounds} prevails and profiling is
   performed on the specified grid.
-
-  If \code{scale=TRUE}, the model matrix of \code{fitted} is scaled by
-  dividing each of its columns with the respective maximum  absolute
-  values. Then the \code{fitted} object is re-fitted using the  new model
-  matrix (see also \code{\link{scaleFit}}). This option should only be used when
-  both the fitting method and the objective are invariant on the scale
-  of the parameters (e.g. the maximum likelihood method and the
-  deviance) and it only affects the calculation; the result will be on
-  the original scale. The \code{scale} argument is intended for avoiding
-  numerical errors associated with the scale of the estimates.
 }
 \value{
   \code{profiling} returns a list of profiles, with one named component
@@ -235,7 +225,7 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   list.
 
   \code{prelim.profiling} returns a list with components
-  \code{intersects} and \code{grid.bounds}.  
+  \code{intersects} and \code{grid.bounds}.
 
   \code{profileModel} returns an object of class \code{"profileModel"}
   that has the attribute \code{includes.traces} corresponding to the
@@ -287,8 +277,8 @@ profiling(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
   S}. Chapman \& Hall/CRC.
 
 }
-\author{Ioannis Kosmidis <email: ioannis@stats.ucl.ac.uk>}
-\seealso{\code{\link{confintModel}}, \code{\link{plot.profileModel}}, \code{\link{scaleFit}}.}
+\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
+\seealso{\code{\link{confintModel}}, \code{\link{plot.profileModel}}.}
 \examples{
 ## Begin Example 1
 library(MASS)
@@ -308,6 +298,7 @@ plot(prof2)
 # quite quadratic in shape. Just to make sure:
 plot(prof2, signed = TRUE)
 # Ok straight lines. So we expect first order asymptotics to work well;
+\dontrun{
 # plot the profiles of the Rao score statistic
 # profile Rao's score statistic
 prof3 <- update(prof2, objective = "RaoScoreStatistic",
@@ -321,7 +312,7 @@ stdErrors <- coef(summary(m1))[,2]
 coef(m1)+ qnorm(0.975) * cbind(-stdErrors,stdErrors)
 # They are all quite similar in value. The result of a quadratic likelihood.
 ## End Example
-
+}
 ## Begin Example 2: Monotone likelihood; data separation;
 library(MASS)
 y <- c(0, 0, 1, 0)
@@ -337,7 +328,7 @@ profConfint(prof)
 # profile.glm fails to detect the finite endpoints
 confint(m2)
 ## End Example
-
+\dontrun{
 ## Begin Example 3: polr
 library(MASS)
 options(contrasts = c("contr.treatment", "contr.poly"))
@@ -348,5 +339,6 @@ plot(prof.plr0)
 prof.plr1 <- update(prof.plr0, quantile = qchisq(0.95, 1))
 plot(prof.plr1)
 ## End Example
+}
 }
 \keyword{models}
