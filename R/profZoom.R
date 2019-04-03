@@ -1,12 +1,10 @@
 ## assumes convex objectives
-`profZoom` <-
-function (prof, ...) 
-UseMethod("profZoom")
-`profZoom.profileModel` <-
-function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE, 
-    ...) 
-{
-    if (is.null(prof$quantile)) 
+profZoom <- function(prof, ...)
+    UseMethod("profZoom")
+
+profZoom.profileModel <- function(prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
+                                  ...) {
+    if (is.null(prof$quantile))
         stop("An object with non-NULL quantile has to be supplied.")
     zero.bound <- prof$zero.bound
     intersects <- prof$intersects
@@ -19,7 +17,7 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
     if (scale <- !is.null(fitted$X.max.scaleFit)) {
         Xmax <- fitted$X.max.scaleFit
         for (i in 1:p) {
-            if (isNA[i]) 
+            if (isNA[i])
                 next
             profRes[[i]][, 1] <- profRes[[i]][, 1] * Xmax[which[i]]
         }
@@ -36,10 +34,10 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
         }
         profRes.i <- profRes[[i]]
         pos <- which(profRes.i[, 2] < quantile)
-        if (intersects[i, 1]) 
+        if (intersects[i, 1])
             grid.left[i, ] <- profRes.i[pos[1] - c(1, 0), 1]
-        if (intersects[i, 2]) 
-            grid.right[i, ] <- profRes.i[pos[length(pos)] + c(0, 
+        if (intersects[i, 2])
+            grid.right[i, ] <- profRes.i[pos[length(pos)] + c(0,
                 1), 1]
     }
     if (!max.zoom) {
@@ -54,7 +52,7 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
         }
         which.i <- which[i]
         bb <- coef(fitted)[which.i]
-        if (verbose) 
+        if (verbose)
             cat("Zooming for parameter", betaNames[i],"...\n")
         grid.left.i <- grid.left[i, ]
         grid.right.i <- grid.right[i, ]
@@ -63,12 +61,12 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
             test <- TRUE
             while (zoom.step <= max.zoom & test) {
                 mean.left <- mean(grid.left.i)
-                profRes.left <- profiling(fitted, grid.bounds = c(mean.left, 
-                  bb), gridsize = 5, verbose = FALSE, 
-                  objective = objective, agreement = agreement, 
+                profRes.left <- profiling(fitted, grid.bounds = c(mean.left,
+                  bb), gridsize = 5, verbose = FALSE,
+                  objective = objective, agreement = agreement,
                   profTraces = FALSE, which = which.i, zero.bound = zero.bound)[[1]][1,]
                 isLess.left <- profRes.left[2] < quantile
-                if (isLess.left) 
+                if (isLess.left)
                   grid.left.i <- c(grid.left.i[1], profRes.left[1])
                 else grid.left.i <- c(profRes.left[1], grid.left.i[2])
                 test <- abs(profRes.left[2] - quantile) > endpoint.tolerance
@@ -84,12 +82,12 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
             test <- TRUE
             while (zoom.step <= max.zoom & test) {
                 mean.right <- mean(grid.right.i)
-                profRes.right <- profiling(fitted, grid.bounds = c(bb, 
-                  mean.right), gridsize = 5, verbose = FALSE, 
-                  objective = objective, agreement = agreement, 
+                profRes.right <- profiling(fitted, grid.bounds = c(bb,
+                  mean.right), gridsize = 5, verbose = FALSE,
+                  objective = objective, agreement = agreement,
                   profTraces = FALSE, which = which.i, zero.bound = zero.bound)[[1]][5,]
                 isLess.right <- profRes.right[2] < quantile
-                if (isLess.right) 
+                if (isLess.right)
                   grid.right.i <- c(profRes.right[1], grid.right.i[2])
                 else grid.right.i <- c(grid.right.i[1], profRes.right[1])
                 test <- abs(profRes.right[2] - quantile) > endpoint.tolerance
@@ -101,7 +99,7 @@ function (prof, max.zoom = 100, endpoint.tolerance = 0.001, verbose = FALSE,
             grid.right[i, ] <- grid.right.i
         }
     }
-    result <- cbind(rowSums(grid.left)/2, rowSums(grid.right)/2)/(if (scale) 
+    result <- cbind(rowSums(grid.left)/2, rowSums(grid.right)/2)/(if (scale)
         Xmax[which]
     else 1)
     dimnames(result) <- list(betaNames, c("Lower", "Upper"))

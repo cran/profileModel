@@ -1,6 +1,4 @@
-`RaoScoreStatistic` <-
-function (fm, X, dispersion = 1) 
-{
+RaoScoreStatistic <- function(fm, X, dispersion = 1) {
     fam <- fm$family
     mus <- fm$fitted
     tots <- fm$prior.weights
@@ -10,9 +8,8 @@ function (fm, X, dispersion = 1)
     qScores <- t(D/variances) %*% ((fm$y - mus) * tots)/dispersion
     t(qScores) %*% chol2inv(chol(Info)) %*% qScores
 }
-`ordinaryDeviance` <-
-function (fm, dispersion = 1) 
-{
+
+ordinaryDeviance <- function(fm, dispersion = 1) {
     LP <- fm$linear.predictor
     y <- fm$y
     fam <- fm$family

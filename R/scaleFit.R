@@ -1,6 +1,4 @@
-`scaleFit` <-
-function (fitted)
-{
+scaleFit <- function(fitted) {
     ## m.call <- fitted$call
     ## mf <- model.frame(fitted$terms,data = eval(m.call$data))
     ## X.or <- model.matrix(fitted$terms, mf, contrasts = fitted$contrasts)

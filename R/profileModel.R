@@ -1,10 +1,8 @@
-`prelim.profiling` <-
-function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is missing."),
-    verbose = TRUE, which = 1:length(coef(fitted)), stepsize = 0.5,
-    stdn = 5, agreement = TRUE, trace.prelim = FALSE, stdErrors = NULL,
-    ...)
+prelim.profiling <- function(fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is missing."),
+                             verbose = TRUE, which = 1:length(coef(fitted)), stepsize = 0.5,
+                             stdn = 5, agreement = TRUE, trace.prelim = FALSE, stdErrors = NULL,
+                             ...) {
     ## which should be a vector of integers
-{
     if (is.null(stdErrors))
         stdErrors <- summary(fitted)$coefficients[, 2]
     Betas <- coef(fitted)
@@ -105,8 +103,7 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
                 ##  else {points(x=b,y=tempDiff);Sys.sleep(1)} #TR
                 ## }
                 curPoint <- curPoint + 1
-                b <- b - min(30, stdErrors.i)/slope.pp * curPoint *
-                  stepsize.temp[1]
+                b <- c(b - min(30, stdErrors.i)/slope.pp * curPoint * stepsize.temp[1])
                 o <- O + Xonlyi * b
                 suppressWarnings(fm <- eval(fm.call))
                 LP <- fm$linear.predictor
@@ -182,8 +179,7 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
                 ##  else {points(x=b,y=tempDiff);Sys.sleep(1)} #TR
                 ## }
                 curPoint <- curPoint + 1
-                b <- b + min(30, stdErrors.i)/slope.pp * curPoint *
-                  stepsize.temp[2]
+                b <- c(b + min(30, stdErrors.i)/slope.pp * curPoint * stepsize.temp[2])
                 o <- O + Xonlyi * b
                 suppressWarnings(fm <- eval(fm.call))
                 LP <- fm$linear.predictor
@@ -242,13 +238,11 @@ function (fitted, quantile = qchisq(0.95, 1), objective = stop("'objective' is m
     list(grid.bounds = grid.bounds, intersects = intersects)
 }
 
-`profileModel` <-
-function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
-    quantile = NULL, objective = stop("'objective' is missing."),
-    agreement = TRUE, verbose = TRUE, trace.prelim = FALSE, which = 1:length(coef(fitted)),
-    profTraces = TRUE, zero.bound = 1e-08, scale = FALSE, stdErrors = NULL,
-    ...)
-{
+profileModel <- function(fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
+                         quantile = NULL, objective = stop("'objective' is missing."),
+                         agreement = TRUE, verbose = TRUE, trace.prelim = FALSE, which = 1:length(coef(fitted)),
+                         profTraces = TRUE, zero.bound = 1e-08, scale = FALSE, stdErrors = NULL,
+                         ...) {
     Betas <- coef(fitted)
     BetasNames <- names(Betas)
     noNA <- !is.na(Betas)
@@ -366,15 +360,13 @@ function (fitted, gridsize = 20, stdn = 5, stepsize = 0.5, grid.bounds = NULL,
 }
 
 
-`profiling` <-
-function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
-    objective = stop("'objective' is missing."), agreement = TRUE,
-    which = 1:length(coef(fitted)), profTraces = TRUE, zero.bound = 1e-08,
-    ...)
+profiling <- function(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
+                      objective = stop("'objective' is missing."), agreement = TRUE,
+                      which = 1:length(coef(fitted)), profTraces = TRUE, zero.bound = 1e-08,
+                      ...) {
     ## which should be a vector of integers
     ## grid.bounds should be a 2*length(which) vector of reals or
      # a 2 by length(which) matrix of reals
-{
     if (is.null(dim(grid.bounds)))
         grid.bounds <- matrix(grid.bounds, ncol = 2, byrow = TRUE)
     Betas <- coef(fitted)
@@ -455,7 +447,7 @@ function (fitted, grid.bounds, gridsize = 20, verbose = TRUE,
             ## else supply no starting valiues...
             ## maybe an argument to control starting values??? TBD
             for (curPoint in inds[[k]]) {
-                bp <- gridd[curPoint]
+                bp <- c(gridd[curPoint])
                 o <- O + Xonlyi * bp
                 suppressWarnings(fm <- eval(fm.call))
                 ## LP will be NULL if fm$linear.predictor does not exist...OK
