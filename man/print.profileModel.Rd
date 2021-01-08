@@ -21,7 +21,7 @@
 \seealso{
   \code{\link{print}}, \code{\link{profileModel}}.
 }
-\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis.kosmidis@warwick.ac.uk>}
 \examples{
 ## Begin Example
 y <- c(1,1,0,0)

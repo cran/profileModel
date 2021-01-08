@@ -40,7 +40,7 @@ prelim.profiling <- function(fitted, quantile = qchisq(0.95, 1), objective = sto
       }
     }
     fm.call$offset <- NULL
-    fitted.formals <- names(formals(as.character(fm.call)))
+    fitted.formals <- names(formals(as.character(fm.call)[[1]]))
     test1 <- "etastart" %in% fitted.formals
     if (test1) {
         LP.or <- fitted$linear.predictor
@@ -404,7 +404,7 @@ profiling <- function(fitted, grid.bounds, gridsize = 20, verbose = TRUE,
       }
     }
     fm.call$offset <- NULL
-    fitted.formals <- names(formals(as.character(fm.call)))
+    fitted.formals <- names(formals(as.character(fm.call)[[1]]))
     test1 <- "etastart" %in% fitted.formals
     if (test1) {
         LP.or <- fitted$linear.predictor

@@ -57,7 +57,7 @@ RaoScoreStatistic(fm, X, dispersion = 1)
   Lindsay, B. G. and Qu, A. (2003). Inference functions and quadratic
   score tests. \emph{Statistical Science} \bold{18}, 394--410.
 }
-\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis.kosmidis@warwick.ac.uk>}
 \note{
   Because the objective functions are evaluated many times in
   \code{\link{profiling}}, \code{\link{prelim.profiling}} and

@@ -111,7 +111,7 @@ verbose = FALSE, ...)
   an attribute carrying the name of the fitted object and the name of the
   \code{"profileModel"} object, respectively.
 }
-\author{Ioannis Kosmidis <email: i.kosmidis@ucl.ac.uk>}
+\author{Ioannis Kosmidis <email: ioannis.kosmidis@warwick.ac.uk>}
 \seealso{\code{\link{confint}}, \code{\link{profileModel}}.}
 \examples{
 \dontrun{
